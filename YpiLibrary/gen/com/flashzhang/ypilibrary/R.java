@@ -25,14 +25,16 @@ public final class R {
         public static final int background_login_div_bg=0x7f020001;
         public static final int bottom_borrowinginfo_normal=0x7f020002;
         public static final int bottom_borrowinginfo_selected=0x7f020003;
-        public static final int bottom_marksinfo_normal=0x7f020004;
-        public static final int bottom_marksinfo_selected=0x7f020005;
-        public static final int bottom_moreinfo_normal=0x7f020006;
-        public static final int bottom_moreinfo_selected=0x7f020007;
-        public static final int bottom_personnalinfo_normal=0x7f020008;
-        public static final int bottom_personnalinfo_selected=0x7f020009;
-        public static final int ic_launcher=0x7f02000a;
-        public static final int mainbg=0x7f02000b;
+        public static final int bottom_card_normal=0x7f020004;
+        public static final int bottom_card_selected=0x7f020005;
+        public static final int bottom_marksinfo_normal=0x7f020006;
+        public static final int bottom_marksinfo_selected=0x7f020007;
+        public static final int bottom_moreinfo_normal=0x7f020008;
+        public static final int bottom_moreinfo_selected=0x7f020009;
+        public static final int bottom_personnalinfo_normal=0x7f02000a;
+        public static final int bottom_personnalinfo_selected=0x7f02000b;
+        public static final int ic_launcher=0x7f02000c;
+        public static final int mainbg=0x7f02000d;
     }
     public static final class id {
         public static final int BorrowlistView=0x7f080001;
@@ -65,22 +67,24 @@ public final class R {
     }
     public static final class layout {
         public static final int activity_borrowinfo=0x7f030000;
-        public static final int activity_login=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int activity_marksinfo=0x7f030003;
-        public static final int activity_moreinfo=0x7f030004;
-        public static final int activity_personnainfo=0x7f030005;
-        public static final int item=0x7f030006;
-        public static final int maintab_itme=0x7f030007;
-        public static final int marksitem=0x7f030008;
+        public static final int activity_cardinfo=0x7f030001;
+        public static final int activity_login=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_marksinfo=0x7f030004;
+        public static final int activity_moreinfo=0x7f030005;
+        public static final int activity_personnainfo=0x7f030006;
+        public static final int item=0x7f030007;
+        public static final int maintab_itme=0x7f030008;
+        public static final int marksitem=0x7f030009;
     }
     public static final class menu {
         public static final int borrowinfo=0x7f070000;
-        public static final int login=0x7f070001;
-        public static final int main=0x7f070002;
-        public static final int marksinfo=0x7f070003;
-        public static final int moreinfo=0x7f070004;
-        public static final int personnainfo=0x7f070005;
+        public static final int cardinfo=0x7f070001;
+        public static final int login=0x7f070002;
+        public static final int main=0x7f070003;
+        public static final int marksinfo=0x7f070004;
+        public static final int moreinfo=0x7f070005;
+        public static final int personnainfo=0x7f070006;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
@@ -91,6 +95,7 @@ public final class R {
         public static final int login_label_username=0x7f050002;
         public static final int login_username_hint=0x7f050004;
         public static final int title_activity_borrowinfo=0x7f050009;
+        public static final int title_activity_cardinfo=0x7f05000c;
         public static final int title_activity_main=0x7f050007;
         public static final int title_activity_marksinfo=0x7f05000b;
         public static final int title_activity_moreinfo=0x7f05000a;

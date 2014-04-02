@@ -50,23 +50,30 @@ public class MainActivity extends TabActivity
 						createTabView(R.drawable.bottom_borrowinginfo_normal, "当前借阅")));
 		
 		
-		Intent intent4=new Intent(MainActivity.this,MarksinfoActivity.class);
-		intent4.putExtra("id", id);
+		Intent intent3=new Intent(MainActivity.this,MarksinfoActivity.class);
+		intent3.putExtra("id", id);
 		tabHost.addTab(tabHost
-				.newTabSpec("tag4")
-				.setContent(intent4)
+				.newTabSpec("tag3")
+				.setContent(intent3)
 				.setIndicator(
 						createTabView(R.drawable.bottom_marksinfo_normal, "成绩查询")));
 		
 		
 		
 		
-		
+		Intent intent4=new Intent(MainActivity.this,MoreinfoActivity.class);
 		tabHost.addTab(tabHost
-				.newTabSpec("tag3")
-				.setContent(new Intent(MainActivity.this, MoreinfoActivity.class))
+				.newTabSpec("tag4")
+				.setContent(intent4)
 				.setIndicator(
-						createTabView(R.drawable.bottom_moreinfo_normal, "更多功能")));
+						createTabView(R.drawable.bottom_moreinfo_normal, "学费查询")));
+		
+		Intent intent5=new Intent(MainActivity.this,CardinfoActivity.class);
+		tabHost.addTab(tabHost
+				.newTabSpec("tag5")
+				.setContent(intent5)
+				.setIndicator(
+						createTabView(R.drawable.bottom_card_normal, "一卡通查询")));
 		
 		tabHost.setCurrentTab(0);// 设置第0个为默认
 		
@@ -100,7 +107,7 @@ public class MainActivity extends TabActivity
 							R.drawable.bottom_borrowinginfo_normal);
 				}
 				
-				if (tabId.equals("tag4")) {
+				if (tabId.equals("tag3")) {
 					View view = tabWidget.getChildTabViewAt(2);
 					view.findViewById(R.id.image_main_tab)
 					.setBackgroundResource(
@@ -113,7 +120,7 @@ public class MainActivity extends TabActivity
 				}
 				
 				
-				if (tabId.equals("tag3")) {
+				if (tabId.equals("tag4")) {
 					View view = tabWidget.getChildTabViewAt(3);
 					view.findViewById(R.id.image_main_tab)
 					.setBackgroundResource(
@@ -123,6 +130,18 @@ public class MainActivity extends TabActivity
 					view.findViewById(R.id.image_main_tab)
 					.setBackgroundResource(
 							R.drawable.bottom_moreinfo_normal);
+				}
+				
+				if (tabId.equals("tag5")) {
+					View view = tabWidget.getChildTabViewAt(4);
+					view.findViewById(R.id.image_main_tab)
+					.setBackgroundResource(
+							R.drawable.bottom_card_selected);
+				} else {
+					View view = tabWidget.getChildTabViewAt(4);
+					view.findViewById(R.id.image_main_tab)
+					.setBackgroundResource(
+							R.drawable.bottom_card_normal);
 				}
 				
 			}

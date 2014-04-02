@@ -44,6 +44,10 @@
             android:name="com.flashzhang.ypilibrary.MarksinfoActivity"
             android:label="@string/title_activity_marksinfo" >
         </activity>
+        <activity
+            android:name="com.flashzhang.ypilibrary.CardinfoActivity"
+            android:label="@string/title_activity_cardinfo" >
+        </activity>
     </application>
 
 </manifest>

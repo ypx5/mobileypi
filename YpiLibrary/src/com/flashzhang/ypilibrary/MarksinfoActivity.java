@@ -13,6 +13,7 @@ import org.ksoap2.transport.AndroidHttpTransport;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,6 +36,7 @@ public class MarksinfoActivity extends Activity
 	private Spinner spinner1;
 	private TextView Text;
     private ListView mListView;
+    private long exitTime = 0;
     private ArrayAdapter<String> adapter;
     List<Map<String,String>> mList;
     String[] mFrom;
@@ -136,6 +138,23 @@ public class MarksinfoActivity extends Activity
 				
 			}
      }
+	 
+	 @Override 
+		public boolean onKeyDown(int keyCode, KeyEvent event) { 
+		if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){ 
+		if((System.currentTimeMillis()-exitTime) > 2000){ 
+		Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show(); 
+		exitTime = System.currentTimeMillis(); 
+		} else { 
+		finish(); 
+		System.exit(0); 
+		
+		} 
+		return true; 
+		} 
+		return super.onKeyDown(keyCode, event); 
+		} 
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

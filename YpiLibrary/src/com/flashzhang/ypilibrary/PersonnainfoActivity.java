@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.app.Activity;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,8 @@ public class PersonnainfoActivity extends Activity
     private TextView name;
     private TextView id;
     private TextView classname;
+    
+    private long exitTime = 0;
     String myid;
     private String NameSpace = "http://tempuri.org/";
     private String MethodName = "getStudentinfo";
@@ -84,5 +87,21 @@ public class PersonnainfoActivity extends Activity
 		getMenuInflater().inflate(R.menu.personnainfo, menu);
 		return true;
 	}
+	
+	@Override 
+	public boolean onKeyDown(int keyCode, KeyEvent event) { 
+	if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){ 
+	if((System.currentTimeMillis()-exitTime) > 2000){ 
+	Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show(); 
+	exitTime = System.currentTimeMillis(); 
+	} else { 
+	finish(); 
+	System.exit(0); 
+	
+	} 
+	return true; 
+	} 
+	return super.onKeyDown(keyCode, event); 
+	} 
 
 }

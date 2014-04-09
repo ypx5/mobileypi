@@ -13,6 +13,7 @@ import org.ksoap2.transport.AndroidHttpTransport;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -25,6 +26,8 @@ public class BorrowinfoActivity extends Activity
     private String url = GlobalSetting.url;
     private String soapAction = NameSpace + MethodName;
     String myid;
+    
+    private long exitTime = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -92,6 +95,22 @@ public class BorrowinfoActivity extends Activity
 	
 	
 	}
+	
+	@Override 
+	public boolean onKeyDown(int keyCode, KeyEvent event) { 
+	if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){ 
+	if((System.currentTimeMillis()-exitTime) > 2000){ 
+	Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show(); 
+	exitTime = System.currentTimeMillis(); 
+	} else { 
+	finish(); 
+	System.exit(0); 
+	
+	} 
+	return true; 
+	} 
+	return super.onKeyDown(keyCode, event); 
+	} 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

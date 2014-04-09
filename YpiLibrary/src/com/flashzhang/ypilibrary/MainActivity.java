@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.TabHost.OnTabChangeListener;
+import android.widget.Toast;
 
 public class MainActivity extends TabActivity
 {  
@@ -21,6 +23,8 @@ public class MainActivity extends TabActivity
 	private TabHost tabHost;// 主界面的导航
     private TabWidget tabWidget;// 主界面底部的标签
     private String id;
+    
+    private long exitTime = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -62,6 +66,7 @@ public class MainActivity extends TabActivity
 		
 		
 		Intent intent4=new Intent(MainActivity.this,MoreinfoActivity.class);
+		intent4.putExtra("id", id);
 		tabHost.addTab(tabHost
 				.newTabSpec("tag4")
 				.setContent(intent4)
@@ -69,6 +74,7 @@ public class MainActivity extends TabActivity
 						createTabView(R.drawable.bottom_moreinfo_normal, "学费查询")));
 		
 		Intent intent5=new Intent(MainActivity.this,CardinfoActivity.class);
+		intent5.putExtra("id", id);
 		tabHost.addTab(tabHost
 				.newTabSpec("tag5")
 				.setContent(intent5)
@@ -171,5 +177,20 @@ public class MainActivity extends TabActivity
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	@Override 
+	public boolean onKeyDown(int keyCode, KeyEvent event) { 
+	if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){ 
+	if((System.currentTimeMillis()-exitTime) > 2000){ 
+	Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show(); 
+	exitTime = System.currentTimeMillis(); 
+	} else { 
+	finish(); 
+	System.exit(0); 
+	} 
+	return true; 
+	} 
+	return super.onKeyDown(keyCode, event); 
+	} 
 
 }

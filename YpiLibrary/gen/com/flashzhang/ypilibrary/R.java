@@ -34,7 +34,9 @@ public final class R {
         public static final int bottom_personnalinfo_normal=0x7f02000a;
         public static final int bottom_personnalinfo_selected=0x7f02000b;
         public static final int ic_launcher=0x7f02000c;
-        public static final int mainbg=0x7f02000d;
+        public static final int logo=0x7f02000d;
+        public static final int mainbg=0x7f02000e;
+        public static final int shape=0x7f02000f;
     }
     public static final class id {
         public static final int BorrowlistView=0x7f080001;

@@ -80,7 +80,7 @@ public class BorrowinfoActivity extends Activity
 			System.out.println(mList.size());
 			SimpleAdapter mAdapter = new SimpleAdapter(this,mList,R.layout.item,mFrom,mTo);  
 			mListView.setAdapter(mAdapter);  
-			
+			Utility.setListViewHeightBasedOnChildren(mListView);
 		}
 		catch(Exception e)
     	{
@@ -121,3 +121,4 @@ public class BorrowinfoActivity extends Activity
 	}
 
 }
+

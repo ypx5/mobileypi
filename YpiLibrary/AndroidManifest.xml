@@ -48,6 +48,10 @@
             android:name="com.flashzhang.ypilibrary.CardinfoActivity"
             android:label="@string/title_activity_cardinfo" >
         </activity>
+        <activity
+            android:name="com.flashzhang.ypilibrary.NewsActivity"
+            android:label="@string/title_activity_news" >
+        </activity>
     </application>
 
 </manifest>

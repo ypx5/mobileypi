@@ -14,12 +14,15 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ public class LoginActivity extends Activity
     private Button loginbutton;
     private EditText user;
     private EditText pass;
+    private CheckBox savepass;
     private ProgressBar progressBar;
     private String NameSpace = "http://tempuri.org/";
     private String MethodName = "loginCheck";
@@ -42,8 +46,26 @@ public class LoginActivity extends Activity
 		setContentView(R.layout.activity_login);
 		user=(EditText)findViewById(R.id.username_edit);
 		pass=(EditText)findViewById(R.id.password_edit);
+		savepass=(CheckBox) findViewById(R.id.savepasswd);
 		loginbutton=(Button)findViewById(R.id.signin_button);
 		progressBar=(ProgressBar)findViewById(R.id.progressBar1);
+		//查看有无保存的用户名和密码
+		SharedPreferences sp=getSharedPreferences("info", Context.MODE_PRIVATE);
+		boolean issavepass=sp.getBoolean("savepass", false);
+		if(issavepass)
+		{		
+			savepass.setChecked(true);
+			String username=sp.getString("username", "");
+			String password=sp.getString("password", "");
+			user.setText(username);
+			pass.setText(password);
+		}
+		else
+		{
+			savepass.setChecked(false);
+			user.setText("");
+			pass.setText("");
+		}
 		loginbutton.setOnClickListener(new OnClickListener(){
 	    	
 	    	
@@ -86,6 +108,21 @@ public class LoginActivity extends Activity
     	public void run()
     	{
     		Looper.prepare();
+    		//如果选中保存密码复选框，则保存用户密码
+    		if(savepass.isChecked())
+    		{
+    			SharedPreferences.Editor editor=getSharedPreferences("info", Context.MODE_PRIVATE).edit();
+    			editor.putString("username", user.getText().toString());
+    			editor.putString("password", pass.getText().toString());
+    			editor.putBoolean("savepass", true);
+    			editor.commit();
+    		}
+    		else
+    		{
+    			SharedPreferences.Editor editor=getSharedPreferences("info", Context.MODE_PRIVATE).edit();
+    			editor.putBoolean("savepass", false);
+    			editor.commit();
+    		}
     		callLoginMethod();
     		Message message=new Message();
     		message.what=0;

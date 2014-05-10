@@ -93,6 +93,15 @@
         android:layout_centerHorizontal="true"
         android:visibility="invisible" />
 
+    <CheckBox
+        android:id="@+id/savepasswd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/signin_button"
+        android:layout_alignBottom="@+id/signin_button"
+        android:layout_alignLeft="@+id/password_edit"
+        android:text="记住密码" />
+
   </RelativeLayout>
   
   

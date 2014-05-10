@@ -14,5 +14,6 @@
     <string name="title_activity_moreinfo">MoreinfoActivity</string>
     <string name="title_activity_marksinfo">成绩查询</string>
     <string name="title_activity_cardinfo">CardinfoActivity</string>
+    <string name="title_activity_news">NewsActivity</string>
 
 </resources>

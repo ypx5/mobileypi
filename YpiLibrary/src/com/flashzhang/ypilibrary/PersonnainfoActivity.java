@@ -7,11 +7,15 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.AndroidHttpTransport;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.os.StrictMode;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,13 +24,15 @@ public class PersonnainfoActivity extends Activity
     private TextView name;
     private TextView id;
     private TextView classname;
-    
+    private ProgressBar mWaitingforPersoninfo;
     private long exitTime = 0;
     String myid;
     private String NameSpace = "http://tempuri.org/";
     private String MethodName = "getStudentinfo";
     private String url = GlobalSetting.url;
     private String soapAction = NameSpace + MethodName;
+    
+    SoapObject userinfo;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -34,11 +40,11 @@ public class PersonnainfoActivity extends Activity
 		setContentView(R.layout.activity_personnainfo);
 		
 		//android4.0 后默认不允许在主线程进行http操作，可以用下列代码强制忽略，留待以后升级多线程实现
-		if (android.os.Build.VERSION.SDK_INT > 9) {
+		/*if (android.os.Build.VERSION.SDK_INT > 9) {
 		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		    StrictMode.setThreadPolicy(policy);
-		}
-		
+		}*/
+		mWaitingforPersoninfo=(ProgressBar) findViewById(R.id.waitingforpersoninfo);
 		name=(TextView)findViewById(R.id.textView2);
 		id=(TextView)findViewById(R.id.textView4);
 		classname=(TextView)findViewById(R.id.textView6);
@@ -46,7 +52,47 @@ public class PersonnainfoActivity extends Activity
 		Intent intent=getIntent();
 		myid=intent.getStringExtra("id");//获取传过来的id
 		
-		try
+		Thread gettingPersoninfoThread=new Thread(thread);
+		gettingPersoninfoThread.start();
+		
+		
+		
+	}
+	
+	private Thread thread=new Thread(){
+    	
+    	public void run()
+    	{
+    		Looper.prepare();
+    		callGettingPersoninfoMethod();
+    		Message message=new Message();
+    		message.what=0;
+	    	myHandler.sendMessage(message); 
+	    	Looper.loop();
+    	}
+    	
+    };
+    
+    private Handler myHandler = new Handler() { 
+        public void handleMessage(Message msg)
+        { 
+             switch (msg.what) 
+             { 
+                  case 0: mWaitingforPersoninfo.setVisibility(mWaitingforPersoninfo.INVISIBLE);
+			              id.setText(userinfo.getProperty("Userid").toString());
+			  		      name.setText(userinfo.getProperty("Name").toString());
+			  			  classname.setText(userinfo.getProperty("Classname").toString());
+      	    	          break;
+                  
+                       
+             } 
+             super.handleMessage(msg); 
+        } 
+   }; 
+    
+    private void callGettingPersoninfoMethod()
+    {
+    	try
 		{
 			SoapObject rpc = new SoapObject(NameSpace, MethodName);
 			rpc.addProperty("id",myid);
@@ -58,15 +104,9 @@ public class PersonnainfoActivity extends Activity
 			envelope.setOutputSoapObject(rpc);
 			ht.call(soapAction, envelope); 
 			SoapObject result =(SoapObject)envelope.bodyIn;
-			SoapObject userinfo=(SoapObject)result.getProperty(0);
+			userinfo=(SoapObject)result.getProperty(0);
 			//System.out.println(result.toString());
-			if(result !=null)
-			{
-				//System.out.println(userinfo.getProperty("Userid"));
-				id.setText(userinfo.getProperty("Userid").toString());
-				name.setText(userinfo.getProperty("Name").toString());
-				classname.setText(userinfo.getProperty("Classname").toString());
-			}
+			
 			
 		}
 		catch(Exception e)
@@ -77,8 +117,9 @@ public class PersonnainfoActivity extends Activity
     		e.printStackTrace();
     	}
 		
-		
-	}
+    	
+    	
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

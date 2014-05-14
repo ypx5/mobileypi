@@ -31,6 +31,14 @@
        
      </RelativeLayout>
 
+    <ProgressBar
+        android:id="@+id/waitingforbooks"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/borrowinfo_div"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
     
 >
     

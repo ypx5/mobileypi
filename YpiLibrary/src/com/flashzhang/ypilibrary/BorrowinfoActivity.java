@@ -11,11 +11,15 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.AndroidHttpTransport;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -26,23 +30,70 @@ public class BorrowinfoActivity extends Activity
     private String url = GlobalSetting.url;
     private String soapAction = NameSpace + MethodName;
     String myid;
-    
+    private ProgressBar mWaitingforbooks;
+    ListView mListView ;
+    List<Map<String,String>> mList;
+    SimpleAdapter mAdapter;
     private long exitTime = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_borrowinfo);
-		ListView mListView = (ListView)findViewById(R.id.BorrowlistView);  
+		mWaitingforbooks=(ProgressBar) findViewById(R.id.waitingforbooks);
+		mListView = (ListView)findViewById(R.id.BorrowlistView);  
 		//下面是数据映射关系,mFrom和mTo按顺序一一对应  
 		String[] mFrom = new String[]{"bookname","borrowdate","duedate"};  
 		int[] mTo = new int[]{R.id.bookname,R.id.borrowdate,R.id.duedate};  
-		List<Map<String,String>> mList = new ArrayList<Map<String,String>>();  
+		mList = new ArrayList<Map<String,String>>();  
 		
 		Intent intent=getIntent();
 		myid=intent.getStringExtra("id");//获取传过来的id
+	    mWaitingforbooks.setVisibility(mWaitingforbooks.VISIBLE);
+	    mList.clear();
+		mAdapter = new SimpleAdapter(this,mList,R.layout.item,mFrom,mTo);  
+		mListView.setAdapter(mAdapter);  
+		Utility.setListViewHeightBasedOnChildren(mListView);
+		mWaitingforbooks.setVisibility(mWaitingforbooks.VISIBLE);
+		Thread gettingBooksThread=new Thread(thread);
+		gettingBooksThread.start();
 	
-		try
+	
+	
+	}
+	
+    private Thread thread=new Thread(){
+    	
+    	public void run()
+    	{
+    		Looper.prepare();
+    		callGettingBookMethod();
+    		Message message=new Message();
+    		message.what=0;
+	    	myHandler.sendMessage(message); 
+	    	Looper.loop();
+    	}
+    	
+    };
+    
+    private Handler myHandler = new Handler() { 
+        public void handleMessage(Message msg)
+        { 
+             switch (msg.what) 
+             { 
+                  case 0: mWaitingforbooks.setVisibility(mWaitingforbooks.INVISIBLE);
+                          mListView.setAdapter(mAdapter);
+      	    	          break;
+                  
+                       
+             } 
+             super.handleMessage(msg); 
+        } 
+   }; 
+    
+    private void callGettingBookMethod()
+    {
+    	try
 		{
 			SoapObject rpc = new SoapObject(NameSpace, MethodName);
 			rpc.addProperty("id",myid);
@@ -77,10 +128,8 @@ public class BorrowinfoActivity extends Activity
 				}
 				
 			}
-			System.out.println(mList.size());
-			SimpleAdapter mAdapter = new SimpleAdapter(this,mList,R.layout.item,mFrom,mTo);  
-			mListView.setAdapter(mAdapter);  
-			Utility.setListViewHeightBasedOnChildren(mListView);
+			
+			
 		}
 		catch(Exception e)
     	{
@@ -90,11 +139,8 @@ public class BorrowinfoActivity extends Activity
     		e.printStackTrace();
     	}
 		
-	
-	
-	
-	
-	}
+    	
+    }
 	
 	@Override 
 	public boolean onKeyDown(int keyCode, KeyEvent event) { 

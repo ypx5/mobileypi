@@ -80,14 +80,14 @@ public class MainActivity extends TabActivity
 				.setContent(intent5)
 				.setIndicator(
 						createTabView(R.drawable.bottom_card_normal, "一卡通查询")));
-		
+		/*
 		Intent intent6=new Intent(MainActivity.this,NewsActivity.class);
 		
 		tabHost.addTab(tabHost
 				.newTabSpec("tag6")
 				.setContent(intent6)
 				.setIndicator(
-						createTabView(R.drawable.bottom_news_normal, "教务新闻")));
+						createTabView(R.drawable.bottom_news_normal, "教务新闻")));*/
 		
 		tabHost.setCurrentTab(0);// 设置第0个为默认
 		
@@ -158,6 +158,7 @@ public class MainActivity extends TabActivity
 							R.drawable.bottom_card_normal);
 				}
 				
+				/*
 				if (tabId.equals("tag6")) {
 					View view = tabWidget.getChildTabViewAt(5);
 					view.findViewById(R.id.image_main_tab)
@@ -168,7 +169,7 @@ public class MainActivity extends TabActivity
 					view.findViewById(R.id.image_main_tab)
 					.setBackgroundResource(
 							R.drawable.bottom_news_normal);
-				}
+				}  */
 				
 				
 			}
